@@ -32,8 +32,8 @@ const ReleaseHealth = ({
     )
   );
 
-  const hasAtLeastOneEntryHealthData = sortedProjects.some(
-    sortedProject => sortedProject.healthData?.hasHealthData
+  const hasAtLeastOneHealthData = sortedProjects.some(
+    sortedProject => sortedProject.hasHealthData
   );
 
   const contentProps = {
@@ -42,7 +42,7 @@ const ReleaseHealth = ({
     orgSlug,
   };
 
-  if (hasAtLeastOneEntryHealthData) {
+  if (hasAtLeastOneHealthData) {
     return (
       <Content
         {...contentProps}
