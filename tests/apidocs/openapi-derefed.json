@@ -2012,7 +2012,20 @@
                         },
                         "errors": {
                           "type": "array",
-                          "items": {}
+                          "items": {
+                            "type": "object",
+                            "properties": {
+                              "message": {
+                                "type": "string"
+                              },
+                              "type": {
+                                "type": "string"
+                              },
+                              "data": {
+                                "type": "object"
+                              }
+                            }
+                          }
                         },
                         "eventID": {
                           "type": "string"
@@ -3369,21 +3382,42 @@
                       "slug": {
                         "type": "string"
                       },
-                      "team": {
-                        "type": "object",
-                        "required": ["id", "name", "slug"],
-                        "properties": {
-                          "id": {
-                            "type": "string"
-                          },
-                          "name": {
-                            "type": "string"
-                          },
-                          "slug": {
-                            "type": "string"
-                          }
-                        }
-                      },
+                        "team": {
+                            "type": "object",
+                            "nullable": true,
+                            "oneOf": [
+                              {
+                              "type": "object",
+                              "required": ["id", "name", "slug"],
+                              "properties": {
+                                "id": {
+                                  "type": "string"
+                                },
+                                "name": {
+                                  "type": "string"
+                                },
+                                "slug": {
+                                  "type": "string"
+                                }
+                              }
+                              },
+                              {
+                              "nullable": true,
+                              "not": {
+                                "anyOf": [
+                                  { "type": "string" },
+                                  { "type": "number" },
+                                  { "type": "boolean" },
+                                  { "type": "object" },
+                                  {
+                                    "type": "array",
+                                    "items": {}
+                                  }
+                                ]
+                              }
+                              }
+                            ]
+                        },
                       "teams": {
                         "type": "array",
                         "items": {
@@ -4049,7 +4083,8 @@
                           "type": "integer"
                         },
                         "culprit": {
-                          "type": "string"
+                          "type": "string",
+                          "nullable": true
                         },
                         "title": {
                           "type": "string"
@@ -4692,6 +4727,7 @@
                     },
                     "latestRelease": {
                       "type": "object",
+                      "nullable": true,
                       "required": [
                         "authors",
                         "commitCount",
@@ -4898,10 +4934,8 @@
                         "type": "object",
                         "required": [
                           "assets",
-                          "author",
                           "canDisable",
                           "contexts",
-                          "description",
                           "doc",
                           "enabled",
                           "hasConfiguration",
@@ -4909,12 +4943,10 @@
                           "isTestable",
                           "metadata",
                           "name",
-                          "resourceLinks",
                           "shortName",
                           "slug",
                           "status",
-                          "type",
-                          "version"
+                          "type"
                         ],
                         "properties": {
                           "assets": {
@@ -4925,6 +4957,7 @@
                           },
                           "author": {
                             "type": "object",
+                            "nullable": true,
                             "properties": {
                               "name": {
                                 "type": "string"
@@ -4969,6 +5002,7 @@
                           },
                           "resourceLinks": {
                             "type": "array",
+                            "nullable": true,
                             "items": {
                               "type": "object",
                               "properties": {
@@ -4994,7 +5028,8 @@
                             "type": "string"
                           },
                           "version": {
-                            "type": "string"
+                            "type": "string",
+                            "nullable": true
                           }
                         }
                       }
@@ -5439,6 +5474,7 @@
                     },
                     "latestRelease": {
                       "type": "object",
+                      "nullable": true,
                       "required": [
                         "authors",
                         "commitCount",
@@ -5645,10 +5681,8 @@
                         "type": "object",
                         "required": [
                           "assets",
-                          "author",
                           "canDisable",
                           "contexts",
-                          "description",
                           "doc",
                           "enabled",
                           "hasConfiguration",
@@ -5656,12 +5690,10 @@
                           "isTestable",
                           "metadata",
                           "name",
-                          "resourceLinks",
                           "shortName",
                           "slug",
                           "status",
-                          "type",
-                          "version"
+                          "type"
                         ],
                         "properties": {
                           "assets": {
@@ -6658,7 +6690,7 @@
           "required": false
         },
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "content": {
               "application/json": {
@@ -6711,7 +6743,7 @@
                       "type": "string"
                     },
                     "user": {
-                      "type": "string",
+                      "type": "object",
                       "nullable": true
                     }
                   }
