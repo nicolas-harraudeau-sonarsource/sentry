@@ -6,7 +6,7 @@ import EmptyMessage from 'app/views/settings/components/emptyMessage';
 
 const EmptyState = () => (
   <Panel>
-    <EmptyMessage>{t('No Key Registered')}</EmptyMessage>
+    <EmptyMessage>{t('No Keys Registered.')}</EmptyMessage>
   </Panel>
 );
 
